@@ -2,15 +2,32 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<link href="css/styles.css" rel="stylesheet" media="screen" type="text/css">
 	
 	<title>Faccat - Puzzle 8</title>
-</head>
+</head>	
 <body>
+	<!-- Navigation -->
+    <nav class="navbar navbar-default">
+   		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<a class="navbar-brand" href="#">Faccat - Puzzle 8</a>
+    		</div>
+    		<ul class="nav navbar-nav">
+      			<li class="active"><a href="#">Home</a></li>
+      				<!--
+      				<li><a href="#">Page 1</a></li>
+      				<li><a href="#">Page 2</a></li> 
+      				<li><a href="#">Page 3</a></li> 
+      				-->
+    		</ul>
+  		</div>
+	</nav>
+
 	<div class="container">
-		<div class="grid-container">
-		  <h2> Configuração Inicial </h2>
+		<div class="grid-container">		  
 		  <div class="grid start" id="grid-start">
 		  	  <!--
 			  <div class="row"> 
@@ -30,12 +47,11 @@
 			  </div>-->
 		  </div>
 		 
-		  <!--<button onclick="start()"> Solve </button>-->
-		  <!--<button onclick="showSolution()"> Show Step </button>-->
-		  <button onclick="reset()"> Reset </button>
-          <button onclick="showStepByStep()"> Exibir solução </button>		  
+		  <button type="button" class="btn btn-warning" onclick="reset()"> Reset </button>
+		  <button type="button" class="btn btn-primary" onclick="start()"> Resolver </button>		  
+          <button type="button" class="btn btn-success" onclick="showStepByStep()"> Exibir </button>		  
 	    </div>
-	
+		<!--
 		<div class="grid-container">
 		  <h2> Objetivo </h2>
 		  <div class="grid goal" id="grid-goal">
@@ -55,8 +71,9 @@
 				<div class="cell"><span>8</span></div>
 				<div class="cell"></div>
 			  </div>
-			-->
+			
 		  </div>
+		  -->
 		</div>
 	
 	</div>
@@ -64,9 +81,12 @@
 	</div>
 	
 	<script type="text/javascript" src="js/jquery.js"></script>
+	<!-- Latest compiled and minified JavaScript -->	
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/priority-queue.js"></script>
 	<script type="text/javascript" src="js/hashtable.js"></script>
 	<script type="text/javascript" src="js/hashset.js"></script>	
 	<script type="text/javascript" src="js/stpuzzle.js"></script>
 </body>
+
 </html>

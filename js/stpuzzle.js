@@ -1,21 +1,21 @@
 
-var emptytilePosRow = 1;//null;
-var emptytilePosCol = 2;//null;
+var emptytilePosRow = null;
+var emptytilePosCol = null;
 var cellDisplacement = "69px";
 var listNumbers = [0,1,2,3,4,5,6,7,8];
-var step = 0;
-var solution = '';
-var initNode = new Node(0, [[8,6,1],[7,2,5],[4,3,0]], 2, 2, 0);
-//var initNode = randomizeNode();
+var solution      = '';
+var show_solution = '';
+//var initNode = new Node(0, [[8,6,1],[7,2,5],[4,3,0]], 2, 2, 0);
+var initNode = randomizeNode();
 var goalNode = new Node(0, [[1,2,3],[4,5,6],[7,8,0]], 2, 2, 0);
 		
-		function moveTile(emptyTagID) {
+		function moveTile() {
 			// Gets the position of the current element
-			console.log('empty tag is ' + emptyTagID);
+			//console.log('empty tag is ' + emptyTagID);
 			var pos = $(this).attr('data-pos');
 			var posRow = parseInt(pos.split(',')[0]);
 			var posCol = parseInt(pos.split(',')[1]);
-
+			//console.log('posRow = ' + posRow + ' posCol = ' + posCol);
 			// Move Up
 			if (posRow + 1 == emptytilePosRow && posCol == emptytilePosCol) 
 			{
@@ -115,9 +115,9 @@ var goalNode = new Node(0, [[1,2,3],[4,5,6],[7,8,0]], 2, 2, 0);
 		{
 			for (var i = 0; i < this.length; i++)
 				if (this[i] == x) 
-					return true
+					return true;
 			
-			return false
+			return false;
 		}
 		
 		function AStar(initial, goal, empty) {
@@ -244,15 +244,16 @@ var goalNode = new Node(0, [[1,2,3],[4,5,6],[7,8,0]], 2, 2, 0);
 		AStar.prototype.execute = function () {
 			// Add current state to visited list
 			this.visited.add(this.initial.strRepresentation)
-			
-			while (this.queue.length > 0) 
-			{
-				var current = this.queue.dequeue();
+			while (this.queue.length > 0) {				
 
+				var current = this.queue.dequeue();
+				var current_rep = current.strRepresentation;
+				console.log(current_rep);
+				refreshPanel('');
+				refreshPanel(current_rep);
 				if (current.strRepresentation == this.goal.strRepresentation) {
 					return current;
 				}	
-				
 				this.expandNode(current);
 			}
 		}
@@ -347,10 +348,33 @@ var goalNode = new Node(0, [[1,2,3],[4,5,6],[7,8,0]], 2, 2, 0);
     		}
 		}
 
+		//Este método determina se o array passado por parâmetro
+  		//pode ser resolvido
+  		function isSolvable(a) {
+
+    		var inversions = 0;
+    
+		    for(i = 0; i < a.length - 1; i++) {
+
+      			for( j = i + 1; j < a.length; j++)
+        			if(a[i] > a[j]) 
+        				inversions++;
+
+      			if(a[i] == 0 && i % 2 == 1) 
+      				inversions++;
+    		}
+    		
+    		return (inversions % 2 == 0);
+  		}		
+
         function randomizeNode() {
-        	
-        	var tempList = listNumbers;
-			shuffleArray(tempList);
+        	var ok = false;
+
+        	while (ok == false) {
+  	        	var tempList = listNumbers;
+				shuffleArray(tempList);
+				ok = isSolvable(tempList);
+        	}
 
 			var temp1 = tempList.slice(0,3);
         	var temp2 = tempList.slice(3,6);
@@ -369,12 +393,17 @@ var goalNode = new Node(0, [[1,2,3],[4,5,6],[7,8,0]], 2, 2, 0);
                 }
             }
 			
-			return new Node(0, temp_array, emptytilePosRow, emptytilePosCol, 0);
+			var newNode = new Node(0, temp_array, emptytilePosRow, emptytilePosCol, 0);
+			console.log(newNode);
+			return newNode;
         }
 
 		function reset() {
+			refreshPanel('');
+			solution      = '';
+			show_solution = '';
         	initNode = randomizeNode();
-        	buildHtmlNode(initNode, 'grid-start');
+        	buildHtmlNode(initNode, 'grid-start', ".start .cell");  			
 		}
 
 		function buildHtmlNode(node, elementID, classClick) {
@@ -401,60 +430,72 @@ var goalNode = new Node(0, [[1,2,3],[4,5,6],[7,8,0]], 2, 2, 0);
 			$(classClick).unbind('click').click(moveTile);
 		}	
 
+		function refreshPanel(text) {
+			var panel = document.getElementById('panel');
+			panel.innerHTML = text;
+		}
+
 		function start() {
-            var step = 0;
 
-			var astar = new AStar(initNode, goalNode, 0)
+			if (solution == '') {
 
-			var startTime = new Date();
-			// Execute AStar
-			var result = astar.execute();
-			console.log('concluído.');
-			//--------------------------
-			var endTime = new Date();
-			//alert('Completed in: ' + (endTime - startTime) + ' milliseconds')
-			
-			var panel = document.getElementById('panel')
-			panel.innerHTML = 'Solução: ' + result.path + 
-			                  '<br> Total Passos: ' + result.path.length + 
-			                  '<br> Tempo total: ' + + (endTime - startTime) + ' milisegundos';
-			solution = result.path;
+				var astar = new AStar(initNode, goalNode, 0)
+
+				var startTime = new Date();
+				// Execute AStar
+				var result = astar.execute();
+				//--------------------------
+				var endTime = new Date();
+				//alert('Completed in: ' + (endTime - startTime) + ' milliseconds')
+				refreshPanel('');			
+				var text = 'Solução: ' + result.path + 
+			    	              '<br> Total Passos: ' + result.path.length + 
+			        	          '<br> Tempo total: ' + + (endTime - startTime) + ' milisegundos';
+				refreshPanel(text);                  
+
+				solution = result.path;
+			}
+
+			console.log(solution);
 		}
 		
-		function showSolution() {			
+		function showSolution(index) {			
 			var move = ''
 
-			switch(solution[step]) {
-					case "R":
-						move =  (emptytilePosRow).toString() + ',' + (emptytilePosCol + 1).toString()
-						break
-					case "L":
-						move =  (emptytilePosRow).toString() + ',' + (emptytilePosCol - 1).toString()
-						break
-					case "U":
-						move =  (emptytilePosRow - 1).toString() + ',' + (emptytilePosCol).toString()
-						break
-					case "D":
-						move =  (emptytilePosRow + 1).toString() + ',' + (emptytilePosCol).toString()
-						break
+			switch(solution[index]) {
+				case "R":
+					move =  (emptytilePosRow).toString() + ',' + (emptytilePosCol + 1).toString()
+					break
+				case "L":
+					move =  (emptytilePosRow).toString() + ',' + (emptytilePosCol - 1).toString()
+					break
+				case "U":
+					move =  (emptytilePosRow - 1).toString() + ',' + (emptytilePosCol).toString()
+					break
+				case "D":
+					move =  (emptytilePosRow + 1).toString() + ',' + (emptytilePosCol).toString()
+					break
 			}
 			
 			$("div[data-pos='" + move + "']").click();
 
-			panel.innerHTML += 'Step: ' + step + ' -> ' + solution[step] + ' ,';
-			step++;
+			panel.innerHTML += 'Step: ' + index + ' -> ' + solution[index] + ' ,';
 		}
 		
 		function showStepByStep() {
-			start();
-			for (var i = 0; i < solution.length; i++) {
-				showSolution();
-			}
+
+			if ((solution != '') && (solution != show_solution)) {
+				for (var i = 0; i < solution.length; i++) {
+    				showSolution(i);
+				};			
+			};
+
+			show_solution = solution;
 		}
 
-		$(document).ready(function() {		  	
+		$(document).ready(function() {		
 			buildHtmlNode(initNode, 'grid-start', ".start .cell");  			
-			buildHtmlNode(goalNode, 'grid-goal', ".goal .cell");  	
+			//buildHtmlNode(goalNode, 'grid-goal', ".goal .cell");  	
 		});
 
 		
