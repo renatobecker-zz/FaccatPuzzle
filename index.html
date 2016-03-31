@@ -1,75 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet" media="screen" type="text/css">
-	
+
 	<title>Faccat | Puzzle</title>
-</head>	
+</head>
 <body>
 <!--
 	<div class="navbar navbar-fixed-top navbar-inverse">
-    	<div class="container">
-      		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-        		<span class="icon-bar"></span>
-      		</button>
-      		<a class="navbar-brand" href="#">Faccat</a>
-      
-    	</div>
+			<div class="container">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Faccat</a>
+
+			</div>
 	</div>
-  	-->
-	<!-- HEADER 
+-->
+	<!-- HEADER
 	=================================-->
 
 	<div class="jumbotron text-center">
-    	<div class="container">
-      		<div class="row">
-        		<div class="col col-lg-12">
-          			<h1>Faccat - Puzzle</h1>
-          			<p>Inteligência Artificial - 2016/1</p>          
-        		</div>
-      		</div>
-    	</div> 
+		<div class="container">
+			<div class="row">
+				<div class="col col-lg-12">
+					<h1>Faccat - Puzzle</h1>
+					<p>Inteligência Artificial - 2016/1</p>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!-- /header container-->
 
 	<div class="container">
-	    <div class="row">
+		<div class="row">
 			<div class="grid start" id="grid-start"></div>
-		</div>	 
+		</div>
 		<div class="row row-buttons">
-  			<button type="button" class="btn btn-default" onclick="reset()"> Reset </button>
-  			<div class = "btn-group">   
-			   <button id="data-column-dropdown" type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown">
-      			Heurística
-      			<span class = "caret"></span>
-   				</button>
-   				<ul id="dropdown-list" class = "dropdown-menu" role = "menu">
-      				<li><a id="md" href = "#">manhattanDistance</a></li>
-      				<li><a id="lc" href = "#">linearConflicts</a></li>
-      				<li><a id="mt" href = "#">misplacedTiles</a></li>      
-   				</ul>
-			</div>	  
-  			<button type="button" class="btn btn-default" onclick="start()"> Resolver </button>	
+			<button type="button" class="btn btn-default" onclick="reset()"> Reset </button>
+			<div class = "btn-group">
+				<button id="data-column-dropdown" type = "button" class = "btn btn-default dropdown-toggle" data-toggle = "dropdown">
+					Heurística
+					<span class = "caret"></span>
+				</button>
+				<ul id="dropdown-list" class = "dropdown-menu" role = "menu">
+					<li><a id="md" href = "#">manhattanDistance</a></li>
+					<li><a id="lc" href = "#">linearConflicts</a></li>
+					<li><a id="mt" href = "#">misplacedTiles</a></li>
+				</ul>
+			</div>
+			<button type="button" class="btn btn-default" onclick="start()"> Resolver </button>
 			<button type="button" class="btn btn-default" onclick="showStepByStep()"> Exibir </button>
-    	</div>
+		</div>
 	</div>
 
 	<div id="panel"></div>
-	
+
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 
-	<!-- Latest compiled and minified JavaScript -->	
+	<!-- Latest compiled and minified JavaScript -->
 	<!--<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 	<script type="text/javascript" src="js/priority-queue.js"></script>
 	<script type="text/javascript" src="js/hashtable.js"></script>
-	<script type="text/javascript" src="js/hashset.js"></script>	
+	<script type="text/javascript" src="js/hashset.js"></script>
 	<script type="text/javascript" src="js/stpuzzle.js"></script>
 </body>
 
